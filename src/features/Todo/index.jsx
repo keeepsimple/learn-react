@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 
 TodoFeature.propTypes = {};
@@ -18,7 +19,7 @@ function TodoFeature(props) {
   ];
 
   const [todoList, setTodoList] = useState(init);
-  const handleTodoClick = (todo, index) => {
+  const handleTodoClick = (index) => {
     //clone cur array
     const newTodoList = [...todoList];
     //toggle state
@@ -30,10 +31,22 @@ function TodoFeature(props) {
     setTodoList(newTodoList);
   };
 
+  const handleFormSubmit = (formValues) =>{
+    const newTodoList = [...todoList];
+    const newTodo = {
+      id: todoList.length + 1,
+      ...formValues
+    }
+    newTodoList.push(newTodo)
+
+    setTodoList(newTodoList)
+  }
+
   return (
     <div>
       <h1>Todo List</h1>
-      <TodoList todoList={todoList} onTodoClick={handleTodoClick} />
+      <TodoForm onSubmit={handleFormSubmit}/>
+      <TodoList todoList={todoList} onTodoClick={handleTodoClick}/>
     </div>
   );
 }

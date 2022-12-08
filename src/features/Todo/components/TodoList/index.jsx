@@ -5,19 +5,21 @@ import "./style.scss";
 
 TodoList.propTypes = {
   todoList: PropTypes.array,
-  onTodoClick: PropTypes.func,
+  onTodoClick: PropTypes.func
 };
 
 TodoList.defaultProps = {
   todoList: [],
-  onTodoClick: null,
+  onTodoClick: null
 };
 
-function TodoList({ todoList, onTodoClick }) {
-  const handleTodoClick = (todo, index) => {
+function TodoList(props) {
+  const { todoList, onTodoClick } = props;
+  
+  const handleTodoClick = (index) => {
     if (!onTodoClick) return;
 
-    onTodoClick(todo, index);
+    onTodoClick(index);
   };
 
   return (
@@ -25,14 +27,15 @@ function TodoList({ todoList, onTodoClick }) {
       {todoList.map((todo, index) => (
         <li
           className={classnames({
-            "todo-item": true,
+            "todo-item":true,
             completed: todo.status === "completed",
           })}
           key={todo.id}
-          onClick={() => handleTodoClick(todo, index)}
+          onClick={() => handleTodoClick(index)}
         >
           {todo.title}
         </li>
+        
       ))}
     </ul>
   );
